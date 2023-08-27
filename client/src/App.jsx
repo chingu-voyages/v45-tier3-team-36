@@ -1,8 +1,17 @@
+import { createBrowserRouter, RouterProvider, createRoutesFromElements, Route } from "react-router-dom"
+import Layout from "./components/Layout"
+import Home from "./pages/Home"
 const App = () => {
+
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route to="/" element={<Layout />}>
+        <Route index element={<Home />} />
+      </Route>
+    )
+  )
    return (
-    <h1 className="text-3xl font-bold underline">
-      TalentBridge
-    </h1>
+    <RouterProvider router={router}/>
    )
 }
 
