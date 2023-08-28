@@ -4,5 +4,33 @@
 @tailwind utilities;
 
 .nav-links {
-    @apply text-[1rem] font-normal leading-normal cursor-pointer hover:bg-primary-500 hover:bg-opacity-[0.1]
+    @apply text-[1.1rem] text-primary-500 font-bold md:font-normal leading-[.6rem] cursor-pointer hover:bg-secondary-500 hover:bg-opacity-[0.3] md:hover:bg-primary-500 md:hover:bg-opacity-[0.1] px-4 py-2 rounded-[.2rem]
+}
+
+.mobile-nav {
+    @apply top-0 bottom-0 w-full
+}
+
+/* HERO SECTION */
+
+.hero-wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+}
+
+.hero-wave svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 117px;
+    transform: rotateY(180deg);
+}
+
+.hero-wave .shape-fill {
+    fill: #FFFFFF;
 }
