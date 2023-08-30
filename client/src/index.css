@@ -11,9 +11,18 @@
     @apply top-0 bottom-0 w-full
 }
 
-/* HERO SECTION */
+.card {
+    @apply rounded-[0.4375rem] bg-primary-500 px-1 md:px-2 py-2  md:w-[14.5rem]
+}
 
-.hero-wave {
+.card-gradient {
+    background: linear-gradient(133deg, rgba(23, 23, 92, 0.70) 0%, rgba(0, 0, 0, 0.49) 100%);
+
+}
+
+/*CUSTOM SHAPE DIVIDERS STYLES */
+
+.first-curve {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -23,7 +32,7 @@
     transform: rotate(180deg);
 }
 
-.hero-wave svg {
+.first-curve svg {
     position: relative;
     display: block;
     width: calc(100% + 1.3px);
@@ -31,6 +40,48 @@
     transform: rotateY(180deg);
 }
 
-.hero-wave .shape-fill {
-    fill: #FFFFFF;
+.first-curve .shape-fill {
+    fill: #E6E6FA;
+}
+
+
+.second-curve {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+}
+
+.second-curve svg {
+    position: relative;
+    display: block;
+    width: calc(161% + 1.3px);
+    height: 178px;
+}
+
+.second-curve .shape-fill {
+    fill:  #4D4DDB;
+}
+
+.third-curve {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.third-curve svg {
+    position: relative;
+    display: block;
+    width: calc(106% + 1.3px);
+    height: 127px;
+}
+
+.third-curve .shape-fill {
+    fill: #000000;
 }
