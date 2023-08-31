@@ -19,7 +19,10 @@ export default {
           500: '#4D4DDB',
           600: '#17175cb3',
           700: '#0000007d',
-        }
+        },
+        button: {
+          400: "#1E1E1E"
+        },
 
       },
       fontFamily: {
