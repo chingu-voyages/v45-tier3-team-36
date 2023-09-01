@@ -1,8 +1,19 @@
-import { NavLink } from "react-router-dom"
+import { NavLink, useLocation } from "react-router-dom"
+
+const RoutesWithoutFooter = ["/sign-in", "/sign-up"]
 
 const Footer = () => {
+    const {pathname} = useLocation()
+
+     //check if pathname includes one of the routes in 
+     //RoutesWithoutHeader
+     //if true render null
+    if (RoutesWithoutFooter.some((item) => pathname.includes(item))) {
+        return null
+    }
+
     return (
-        <section className="bg-primary-600 px-2 md:px-0 pt-[1rem] pb-[2rem] md:pt-[2rem] md:pb-[2rem]">
+        <footer className="bg-primary-600 px-2 md:px-0 pt-[1rem] pb-[2rem] md:pt-[2rem] md:pb-[2rem]">
             <div className="md:w-[90%] md:mx-auto text-primary-500 flex flex-col md:flex-row gap-[1.2rem] md:gap-[5.5rem] items-start">
                 <article className="flex flex-col md:gap-4">
                     <h2 className="text-[1.5rem] md:text-[2rem] font-bold leading-normal">TalentBridge</h2>
@@ -25,7 +36,7 @@ const Footer = () => {
                 </article>
             </div>
 
-        </section>
+        </footer>
     )
 }
 
