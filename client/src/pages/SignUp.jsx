@@ -24,7 +24,7 @@ const SignUp = () => {
                     </label>
                     <button className="bg-button-400 py-2 text-primary-500 hover:bg-opacity-[0.9] rounded-[0.3rem] md:text-[1.1rem] mb-2">Sign Up</button>
                 </form>
-                <p className=" md:text-[1.1rem] font-normal leading-normal text-center">Already have an account? <NavLink to="/sign-in" className="hover:underline text-secondary-500 md:text-[1rem]">SignIn</NavLink></p>
+                <p className=" md:text-[1.1rem] font-normal leading-normal text-center">Already have an account? <NavLink to="/login" className="hover:underline text-secondary-500 md:text-[1rem]">login</NavLink></p>
             </section>
         </main>
     )

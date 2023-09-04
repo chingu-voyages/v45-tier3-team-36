@@ -5,6 +5,7 @@ import SignIn from "./pages/SignIn"
 import SignUp from "./pages/SignUp"
 import ResetPassword from "./pages/ResetPassword"
 import ForgotPassword from "./pages/ForgotPassword"
+import UserDashBoard from "./pages/UserDashBoard"
 
 
 const App = () => {
@@ -13,10 +14,11 @@ const App = () => {
     createRoutesFromElements(
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/login" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/user-profile" element={<UserDashBoard />} />
 
 
       </Route>
