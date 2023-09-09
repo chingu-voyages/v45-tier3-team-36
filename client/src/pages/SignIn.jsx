@@ -15,7 +15,7 @@ const SignIn = () => {
                         <input  className="border-2 py-2 px-2 text-[1rem] border-secondary-500 rounded-[0.25rem] outline-none" id="password" type="password" required />
                     </label>
                     <NavLink to="/forgot-password" className="hover:underline text-secondary-500 text-right mt-2">Forgot Password?</NavLink>
-                    <button className="bg-button-400 py-2 text-primary-500 hover:bg-opacity-[0.9] rounded-[0.3rem] md:text-[1.1rem] mb-2">Sign in</button>
+                    <button className="bg-button-400 py-2 text-primary-500 hover:bg-opacity-[0.9] rounded-[0.3rem] md:text-[1.1rem] mb-2">Login</button>
                 </form>
                 <p className=" md:text-[1.1rem] font-normal leading-normal text-center">No account yet? <NavLink to="/sign-up" className="hover:underline text-secondary-500 md:text-[1rem]">SignUp</NavLink></p>
             </section>

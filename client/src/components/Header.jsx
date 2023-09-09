@@ -4,7 +4,7 @@ import { RxHamburgerMenu } from 'react-icons/rx'
 import { AiOutlineClose } from 'react-icons/ai'
 
 
-const RoutesWithoutHeader = ["/sign-in", "/sign-up", "/reset-password", "/forgot-password"]
+const RoutesWithoutHeader = ["/login", "/sign-up", "/reset-password", "/forgot-password"]
 
 const Header = () => {
     const [toggle, setToggle] = useState(false)
@@ -36,15 +36,14 @@ const Header = () => {
                         <ul className="flex flex-col gap-2 md:gap-4 md:flex-row md:mx-auto items-center">
                             <li><NavLink to="/" className="nav-links">Home</NavLink></li>
                             <li><NavLink className="nav-links">Jobs</NavLink></li>
-                            <li><NavLink className="nav-links">About</NavLink></li>
+                            <li><NavLink className="nav-links">About Us</NavLink></li>
                         </ul>
                         <ul className="flex flex-col gap-2 md:gap-4 md:flex-row items-center">
                             <li>
-                                <NavLink to="/sign-in" className="nav-links">
-                                    Sign In
+                                <NavLink to="/login" className="nav-links">
+                                    Login
                                 </NavLink>
                             </li>
-                            <li><NavLink to="/sign-up" className="nav-links">Sign Up</NavLink></li>
                             <li><NavLink className="text-[1rem] font-bold md:font-normal cursor-pointer hover:opacity-[0.6] px-4 py-2 rounded-[.2rem] bg-primary-600 text-primary-500">Post a Job</NavLink></li>
                         </ul>
                     </nav>
