@@ -5,7 +5,7 @@ const UserDashBoard = () => {
             <section className="flex gap-8">
                 <div className="bg-slate-600 md:w-[30%]">
                     <div>image</div>
-                    <p>Ananya Grover</p>
+                    <p>Ananya james</p>
                     <p>Frontend developer</p>
                 </div>
                 <div className="bg-slate-800 md:w-[70%]">
