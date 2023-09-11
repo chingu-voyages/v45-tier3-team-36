@@ -11,10 +11,22 @@ const signupUser = async (req, res) => {
   }
 };
 
+// Controller for Employers sign up
+const employerSignUp = async (req, res) => {
+  try {
+    console.log({Employer: req.body})
+    const { firstname, lastname, email, password, company } = req.body;
+    const employer = await User.registerEmployer (firstname, lastname, email, password, company);
+    res.json({ message: "Employer signup successful. Please verify your email." })
+  } catch (error) {
+    res.status(400).json({ error: error.message })
+  }
+}
+
 // Controller for email verification
 const verifyEmail = async (req, res) => {
   try {
-    const { token } = req.params;
+    const { token } = req.query;
     const user = await User.verifyEmail(token);
     res.json({ message: "Email verified successfully. Please sign in" });
   } catch (error) {
@@ -55,80 +67,19 @@ const initiatePasswordReset = async (req, res) => {
 const resetPasswordWithToken = async (req, res) => {
   try {
     const { newPassword, confirmPassword } = req.body;
-    const resetToken = req.params.token; 
+    const { token } = req.query; 
 
     if (newPassword !== confirmPassword) {
       return res.status(400).json({ error: "Passwords do not match" });
     }
 
-    await User.resetTokenWithPassword(resetToken, newPassword);
+    await User.resetTokenWithPassword(token, newPassword);
     res.json({ message: "Password reset successful." });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 
-// // Controller for updating User Profile
-// const updateUserProfile = async (req, res) => {
-
-//   try {
-//     const userId = req.user._id;
-//     console.log(userId)
-
-//     const {
-//       firstname,
-//       lastname,
-//       email,
-//       jobTitle,
-//       userBio,
-//       age,
-//       location,
-//       skills,
-//       personalWebsite,
-//       socialMedia,
-//     } = req.body;
-
-//     upload.fields([
-//       { name: "profilePicture", maxCount: 1 },
-//       { name: "resume", maxCount: 1 },
-//     ])(req, res, async (err) => {
-//       if (err) {
-//         return res.status(400).json({ error: "File upload error" });
-//       }
-
-//       const profilePicturePath = req.file["profilePicture"]
-//         ? req.files["profilePicture"][0].filename
-//         : undefined;
-//       const resumePath = req.file["resume"]
-//         ? req.files["resume"][0].filename
-//         : undefined;
-
-//       const updates = {
-//         firstname,
-//         lastname,
-//         email,
-//         jobTitle,
-//         userBio,
-//         age,
-//         location,
-//         skills,
-//         personalWebsite,
-//         socialMedia,
-//       };
-
-//       const updatedUser = await User.updateUserProfile(
-//         userId,
-//         updates,
-//         profilePicturePath,
-//         resumePath
-//       );
-
-//       res.json({ message: "Profile updated successfully", user: updatedUser });
-//     });
-//   } catch (error) {
-//     res.status(500).json({ error: "Error updating profile" });
-//   }
-// };
 
 const updateUserProfile = async (req, res) => {
   try {
@@ -155,7 +106,9 @@ const updateUserProfile = async (req, res) => {
     const profilePicturePath = profilePicture[0].filename;
     const resumePath = resume[0].filename;
 
-    const token = req.header("Authorization").replace("Bearer ", "");
+    // const token = req.header("Authorization").replace("Bearer ", "");
+    const authHeader = req.headers.authorization || req.headers.Authorization 
+    const token = authHeader.split(" ")[1]
 
     const updates = {
       firstname,
@@ -212,6 +165,38 @@ const sendJobNotification = async (req, res) => {
   }
 }
 
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.getAllUsers();
+
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const getUserProfile = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.getUserProfile(id);
+    res.status(200).json({ user })
+  } catch (error) {
+    res.status(500).json({ error: 'Error fetching user profile' });
+  }
+}
+
+const deleteUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+     const { email } = req.body;
+
+    const deletedUser = await User.deleteUser(userId);
+  } catch (error) {
+    res.status(500).json({ error: "Error deleting user" });
+  }
+}
+
+
 module.exports = {
   signupUser,
   verifyEmail,
@@ -220,5 +205,9 @@ module.exports = {
   resetPasswordWithToken,
   updateUserProfile,
   promoteToAdmin,
-  sendJobNotification
+  sendJobNotification,
+  employerSignUp,
+  getAllUsers,
+  getUserProfile,
+  deleteUser
 };

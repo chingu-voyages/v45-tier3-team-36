@@ -3,8 +3,11 @@ const JobListing = require("../models/jobListingModel");
 // Controller for creating job listing
 const createJobListing = async (req, res) => {
   try {
-    const { title, description, location, salary } = req.body;
+    const { title, description, location, salary, company } = req.body;
+    console.log({reqUser: req.user})
     const userId = req.user.id; 
+    const jobType = req.user.role;
+    console.log({userId: userId})
 
     const jobListingData = {
       title,
@@ -12,6 +15,8 @@ const createJobListing = async (req, res) => {
       location,
       salary,
       postedBy: userId, // Assign the user who is posting the job listing
+      company,
+      jobType: jobType
     };
 
     const newJobListing = await JobListing.createJobListing(jobListingData);
@@ -25,16 +30,19 @@ const createJobListing = async (req, res) => {
 const updateJobListing = async (req, res) => {
   try {
     const { title, description, location, salary } = req.body;
-    const { jobListingId } = req.params;
+    const { id } = req.params;
+   
 
-    const updatedJobListing = await JobListing.updateJobListing(jobListingId, {
+    const data = {
       title,
       description,
       location,
-      salary,
-    });
+      salary
+    };
 
-    res.json(updatedJobListing);
+    const updatedJobListing = await JobListing.updateJobListing(id, data);
+
+    res.json({message: "Job listing updated successfully"});
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -43,11 +51,11 @@ const updateJobListing = async (req, res) => {
 // Controller for Deleting a job listing
 const deleteJobListing = async (req, res) => {
   try {
-    const { jobListingId } = req.params;
+    const { id } = req.params;
 
-    const deletedJobListing = await JobListing.deleteJobListing(jobListingId);
+    const deletedJobListing = await JobListing.deleteJobListing(id);
 
-    res.json(deletedJobListing);
+    res.status(200).json({message: "Job Listing deleted successfully"});
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -58,7 +66,7 @@ const getAllJobListings = async (req, res) => {
   try {
     const jobListings = await JobListing.getAllJobListings();
 
-    res.json(jobListings);
+    res.status(200).json(jobListings);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -67,9 +75,9 @@ const getAllJobListings = async (req, res) => {
 // Controller for getting a job listing by ID
 const getJobListingById = async (req, res) => {
   try {
-    const { jobListingId } = req.params;
+    const { id } = req.params;
 
-    const jobListing = await JobListing.getJobListingById(jobListingId);
+    const jobListing = await JobListing.getJobListingById(id);
 
     res.json(jobListing);
   } catch (error) {
@@ -113,14 +121,26 @@ const filterJobListing = async (req, res) => {
 
 const applyToJob = async (req, res) => {
   try {
-    const { jobId } = req.params;
+    const { id } = req.params;
     const userId = req.user.id; 
 
-    const message = await JobListing.applyToJob(jobId, userId);
+    const message = await JobListing.applyToJob(id, userId);
 
     res.status(200).json({ message });
   } catch (error) {
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const getApplicantsForJob = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const applicants = await JobListing.findApplicantsForJob(id);
+
+    res.status(200).json({ applicants });
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching applicants for the job" });
   }
 };
 
@@ -131,5 +151,7 @@ module.exports = {
   getAllJobListings,
   getJobListingById,
   searchJobListing,
-  applyToJob
+  filterJobListing,
+  applyToJob,
+  getApplicantsForJob
 };
