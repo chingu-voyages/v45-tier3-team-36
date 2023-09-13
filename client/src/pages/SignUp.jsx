@@ -13,7 +13,7 @@ const SignUp = () => {
         mode: "onBlur"
     })
 
-    const {register, handleSubmit, formState} = form
+    const {register, handleSubmit, trigger, formState} = form
     const {errors, isDirty, isValid, isSubmitting} = formState
 
     const submitForm = async (data) => {
@@ -76,18 +76,35 @@ const SignUp = () => {
                     </label>
                     <label htmlFor="password" className="flex flex-col gap-2 text-[1rem] md:text-[1.26rem] font-normal leading-normal">
                         Password
-                        <div className="flex justify-between items-center border-2 py-2 px-2 text-[1rem] border-secondary-500 rounded-[0.25rem]">
-                            <input  className="text-[1rem] w-full outline-none" id="password" type={visible ? "text" : "password"} {...register("password", {
-                            required: {
-                                value: true,
-                                message: "Password is required"
-                            }
-                            })}/>
+                        <div className="flex justify-between items-center border-2 px-2 text-[1rem] border-secondary-500 rounded-[0.25rem]">
+                            <input  className="text-[1rem] w-full py-2 outline-none" id="password" type={visible ? "text" : "password"} {...register("password", {
+                                    pattern: {
+                                        value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/ ,
+                                        message: "Password must include at least one lowercase letter, one uppercase letter, one numeric digit, and one special character"
+                                    },
+                                    required: {
+                                    value: true,
+                                    message: "Password is required"
+                                    },
+                                    minLength: {
+                                        value: 8,
+                                        message: "Minimum required length is 8"
+                                    },
+                                    maxLength: {
+                                        value: 15,
+                                        message: "Maximum required length is 15"
+                                    }
+
+                            })}
+                            onKeyUp={() => {
+                                trigger("password")
+                            }}
+                            />
                             <span className="px-2 py-2 rounded-[1.2rem] hover:bg-slate-400" onClick={() => setVisible(prev => !prev)}>{visible ? <BsFillEyeFill/> : <BsFillEyeSlashFill />}</span>
                         </div>
                         <p className="text-red-700 text-[.8rem]">{errors.password?.message}</p>
                     </label>
-                    <button disabled={!isDirty || !isValid || isSubmitting} className={`bg-button-400 py-2 text-primary-500 hover:bg-opacity-[0.9] rounded-[0.3rem] md:text-[1rem] mb-2 flex justify-center items-center ${isSubmitting ? "bg-opacity-[0.7]" : ""}`}>{isSubmitting ? <ImSpinner className={`${isSubmitting ? "animate-spin bg-opacity-[0.7]" : "animate-none"} w-6 h-6`}/> : "Sign Up"}</button>
+                    <button disabled={!isDirty || !isValid || isSubmitting} className={`bg-button-400 py-2 text-primary-500 hover:bg-opacity-[0.9] rounded-[0.3rem] md:text-[1rem] mb-2 flex justify-center items-center ${isSubmitting || !isDirty || !isValid ? "bg-opacity-[0.7] hover:bg-opacity-[0.7] " : ""}`}>{isSubmitting ? <ImSpinner className={`${isSubmitting ? "animate-spin bg-opacity-[0.7]" : "animate-none"} w-6 h-6`}/> : "Sign Up"}</button>
                 </form>
                 <p className=" md:text-[1.1rem] font-normal leading-normal text-center">Already have an account? <NavLink to="/login" className="hover:underline text-secondary-500 md:text-[1rem]">login</NavLink></p>
             </section>
