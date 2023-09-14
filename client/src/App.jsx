@@ -6,7 +6,6 @@ import SignUp from "./pages/SignUp"
 import ResetPassword from "./pages/ResetPassword"
 import ForgotPassword from "./pages/ForgotPassword"
 import UserDashBoard from "./pages/UserDashBoard"
-import AccountCreated from "./pages/accountCreated"
 import VerifyEmail from "./pages/verifyEmail"
 
 
@@ -19,7 +18,6 @@ const App = () => {
         <Route path="/login" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-up/verify-email" element={<VerifyEmail />} />
-        <Route path="/signup-successful" element={<AccountCreated />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/user-profile" element={<UserDashBoard />} />
