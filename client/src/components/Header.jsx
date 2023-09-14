@@ -4,7 +4,7 @@ import { RxHamburgerMenu } from 'react-icons/rx'
 import { AiOutlineClose } from 'react-icons/ai'
 
 
-const RoutesWithoutHeader = ["/login", "/sign-up", "/reset-password", "/forgot-password", "/signup-successful", "/sign-up/verify-email"]
+const RoutesWithoutHeader = ["/login", "/sign-up", "/reset-password", "/forgot-password", "/signup-successful", "/sign-up/verify-email", "/forgot-password/initialize_password_reset"]
 
 const Header = () => {
     const [toggle, setToggle] = useState(false)

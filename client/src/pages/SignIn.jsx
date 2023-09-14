@@ -2,8 +2,12 @@ import { NavLink } from "react-router-dom"
 import {useForm} from "react-hook-form"
 import {ImSpinner} from "react-icons/im"
 import axios from "axios"
+import { useState } from "react"
+import {BsFillEyeFill, BsFillEyeSlashFill} from "react-icons/bs"
 
 const SignIn = () => {
+    const [error, setError] = useState("")
+    const [visible, setVisible] = useState(false)
     const form = useForm({
         mode: "onBlur"
     })
@@ -21,8 +25,8 @@ const SignIn = () => {
             //give user access and redirect user profile
             console.log(response)
         }
-        }catch(err) {
-            console.log(err)
+        }catch(error) {
+            setError(error.response.data.error)
         }
     }
 
@@ -47,15 +51,21 @@ const SignIn = () => {
                     </label>
                     <label htmlFor="password" className="flex flex-col gap-2 text-[1rem] md:text-[1.26rem] font-normal leading-normal">
                         Password
-                        <input  className="border-2 py-2 px-2 text-[1rem] border-secondary-500 rounded-[0.25rem] outline-none" id="password" type="password" {...register("password", {
-                            required: {
-                                value: true,
-                                message: "Password is required"
-                            }
-                        })}/>
+                        <div className="flex justify-between items-center border-2 px-2 text-[1rem] border-secondary-500 rounded-[0.25rem]">
+                            <input  className="text-[1rem] w-full py-2 outline-none" type={visible ? "text" : "password"} id="password" {...register("password", {
+                                required: {
+                                    value: true,
+                                    message: "Password is required"
+                                }
+                            })}/>
+                            <span className="px-2 py-2 rounded-[1.2rem] hover:bg-slate-400" onClick={() => setVisible(prev => !prev)}>{visible ? <BsFillEyeFill/> : <BsFillEyeSlashFill />}</span>
+                        </div>
                         <p className="text-red-700 text-[.8rem]">{errors.password?.message}</p>
                     </label>
                     <NavLink to="/forgot-password" className="hover:underline text-secondary-500 text-right mt-2">Forgot Password?</NavLink>
+                    {
+                      error !== "" &&  <p className="text-red-700 text-[.95rem]">{error}</p>
+                    }
                     <button disabled={!isDirty || !isValid || isSubmitting} className={`bg-button-400 py-2 text-primary-500 hover:bg-opacity-[0.7] rounded-[0.3rem] md:text-[1.1rem] mb-2 ${isSubmitting || !isDirty || !isValid ? "bg-opacity-[0.7] hover:bg-opacity-[0.7] " : ""}`}>{isSubmitting ? <ImSpinner className={`${isSubmitting ? "animate-spin bg-opacity-[0.7]" : "animate-none"} w-6 h-6`}/> : "Login"}</button>
                 </form>
                 <p className=" md:text-[1.1rem] font-normal leading-normal text-center">No account yet? <NavLink to="/sign-up" className="hover:underline text-secondary-500 md:text-[1rem]">SignUp</NavLink></p>
