@@ -1,15 +1,17 @@
-import { NavLink, useNavigate } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import {useForm} from "react-hook-form"
 import axios from "axios"
 import {ImSpinner} from "react-icons/im"
 import {BsFillEyeFill, BsFillEyeSlashFill} from "react-icons/bs"
 import { useState } from "react"
+import Rodal from "rodal"
 
 
 const SignUp = () => {
     const [visible, setVisible] = useState(false)
+    const [openModal, setOpenModal] = useState(true)
     const [error, setError] = useState("")
-    const navigate = useNavigate()
+
     const form = useForm({
         mode: "onBlur"
     })
@@ -28,8 +30,7 @@ const SignUp = () => {
             console.log(response)
             if(response.status === 200) {
                 console.log(response.ok)
-                //redirect user to verify email page
-                navigate("/sign-up/verify-email")
+                setOpenModal(prev => !prev)
             }
 
         } catch(error) {
@@ -114,6 +115,13 @@ const SignUp = () => {
                 </form>
                 <p className=" md:text-[1.1rem] font-normal leading-normal text-center">Already have an account? <NavLink to="/login" className="hover:underline text-secondary-500 md:text-[1rem]">login</NavLink></p>
             </section>
+            <Rodal height={300} visible={openModal} animation="zoom">
+                <section className="py-6 flex flex-col items-center gap-4">
+                    <p className="text-[#22c55e] font-bold text-[1.3rem] text-center">Thanks! your account has been successfully created.</p>
+                    <p className="text-center text-[1rem] text-[#334155]">Please check your inbox (check your spam if you don't see the email), a verification email has been sent to you. kindly verify your email to to able to login and complete your profile.</p>
+                    <button className="bg-secondary-500 text-primary-500 hover:bg-opacity-[0.95] px-[3rem] py-2 rounded-[.4rem]" onClick={() => setOpenModal(prev => !prev)}>OK</button>
+                </section>
+            </Rodal>
         </main>
     )
 }
