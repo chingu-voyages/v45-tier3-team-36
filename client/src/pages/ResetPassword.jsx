@@ -11,7 +11,7 @@ const ResetPassword = () => {
     const [newPassword, setNewPassword] = useState(false)
     const [confirmPassword, setConfirmPassword] = useState(false)
     const [error, setError] = useState("")
-    const [openModal, setOpenModal] = useState(true)
+    const [openModal, setOpenModal] = useState(false)
 
     const form = useForm({
         mode: "onBlur"

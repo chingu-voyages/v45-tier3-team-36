@@ -3,11 +3,13 @@ import {useForm} from "react-hook-form"
 import axios from "axios"
 import {ImSpinner} from "react-icons/im"
 import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
+import Rodal from "rodal"
 
 const ForgotPassword = () => {
     const [error, setError] = useState("")
-    const navigate = useNavigate()
+    const [openModal, setOpenModal] = useState(true)
+    const [responseMessage, setResponseMessage] = useState("")
+
     const form = useForm({
         mode: "onBlur"
     })
@@ -20,9 +22,10 @@ const ForgotPassword = () => {
             const response = await axios.post("https://talentbridge.onrender.com/api/user/initiate-password-reset", {
                 email: data.email
             })
-            //redirect user to reset password email page
+            
             if (response.status === 200) {
-                navigate("/forgot-password/initialize_password_reset")
+                setResponseMessage(response.data.message)
+                setOpenModal(prev => !prev)
             }
         } catch(error) {
             setError(error.response.data.error)
@@ -61,6 +64,12 @@ const ForgotPassword = () => {
                     <button disabled={!isDirty || !isValid || isSubmitting}  className={`bg-button-400 py-2 text-primary-500 hover:bg-opacity-[0.7] rounded-[0.3rem] md:text-[1.1rem] mb-2 ${isSubmitting || !isDirty || !isValid ? "bg-opacity-[0.7] hover:bg-opacity-[0.7] " : ""}`}>{isSubmitting ? <ImSpinner className={`${isSubmitting ? "animate-spin bg-opacity-[0.7]" : "animate-none"} w-6 h-6`}/> : "Recover"}</button>
                 </form>
             </section>
+            <Rodal height={240} width={350} visible={openModal} animation="zoom">
+                <section className="mt-[4rem] flex flex-col items-center gap-4">
+                    <p className="text-center text-[1rem] text-[#334155]">{responseMessage}</p>
+                    <button className="bg-secondary-500 text-primary-500 hover:bg-opacity-[0.95] px-[2.5rem] py-2 rounded-[.4rem]" onClick={() => setOpenModal(prev => !prev)}>Go to Login</button>
+                </section>
+            </Rodal>
         </main>
     )
 }
