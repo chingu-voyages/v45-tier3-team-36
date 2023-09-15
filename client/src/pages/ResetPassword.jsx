@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom"
 import {useForm} from "react-hook-form"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import {BsFillEyeFill, BsFillEyeSlashFill} from "react-icons/bs"
 import {ImSpinner} from "react-icons/im"
 import axios from "axios"
@@ -13,6 +13,9 @@ const ResetPassword = () => {
     const form = useForm({
         mode: "onBlur"
     })
+
+    const {register, handleSubmit, formState, reset} = form
+    const {errors, isDirty, isValid, isSubmitting, isSubmitSuccessful} = formState
 
     const resetPassword = async (data) => {
         try {
@@ -30,8 +33,13 @@ const ResetPassword = () => {
         }
     }
 
-    const {register, handleSubmit, formState} = form
-    const {errors, isDirty, isValid, isSubmitting} = formState
+    //reset form if submission is successful
+    useEffect(() => {
+        if (isSubmitSuccessful) {
+            reset()
+        }
+    }, [isSubmitSuccessful, reset])
+
     return (
         <main className="mt-[2rem] md:mt-[.5rem]">
             <NavLink to="/" className="px-2 md:px-10 text-[1.1rem] md:text-[1.6rem] font-bold leading-normal text-secondary-500">TalentBridge</NavLink>

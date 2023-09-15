@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom"
 import {useForm} from "react-hook-form"
 import {ImSpinner} from "react-icons/im"
 import axios from "axios"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import {BsFillEyeFill, BsFillEyeSlashFill} from "react-icons/bs"
 
 const SignIn = () => {
@@ -12,8 +12,8 @@ const SignIn = () => {
         mode: "onBlur"
     })
 
-    const {register, handleSubmit, formState} = form
-    const {errors, isDirty, isValid, isSubmitting} = formState
+    const {register, handleSubmit, formState, reset} = form
+    const {errors, isDirty, isValid, isSubmitting, isSubmitSuccessful} = formState
 
     const signInUser = async (data) => {
         try {
@@ -29,6 +29,12 @@ const SignIn = () => {
             setError(error.response.data.error)
         }
     }
+
+    useEffect(() => {
+        if (isSubmitSuccessful) {
+            reset()
+        }
+    }, [isSubmitSuccessful, reset])
 
     return (
         <main className="my-[5rem]">

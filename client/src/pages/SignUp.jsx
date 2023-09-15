@@ -3,7 +3,7 @@ import {useForm} from "react-hook-form"
 import axios from "axios"
 import {ImSpinner} from "react-icons/im"
 import {BsFillEyeFill, BsFillEyeSlashFill} from "react-icons/bs"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Rodal from "rodal"
 
 
@@ -16,8 +16,8 @@ const SignUp = () => {
         mode: "onBlur"
     })
 
-    const {register, handleSubmit, trigger, formState} = form
-    const {errors, isDirty, isValid, isSubmitting} = formState
+    const {register, handleSubmit, trigger, formState, reset} = form
+    const {errors, isDirty, isValid, isSubmitting, isSubmitSuccessful} = formState
 
     const submitForm = async (data) => {
         try {
@@ -37,6 +37,12 @@ const SignUp = () => {
            setError(error.response.data.error)
         }
     }
+
+    useEffect(() => {
+        if (isSubmitSuccessful) {
+            reset()
+        }
+    }, [isSubmitSuccessful, reset])
 
     return (
         <main className="my-[3rem] md:my-[2rem]">
