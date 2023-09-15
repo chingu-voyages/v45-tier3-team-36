@@ -4,18 +4,26 @@ import { useState, useEffect } from "react"
 import {BsFillEyeFill, BsFillEyeSlashFill} from "react-icons/bs"
 import {ImSpinner} from "react-icons/im"
 import axios from "axios"
+import Rodal from "rodal"
 
 const ResetPassword = () => {
     const navigate = useNavigate()
     const [newPassword, setNewPassword] = useState(false)
     const [confirmPassword, setConfirmPassword] = useState(false)
     const [error, setError] = useState("")
+    const [openModal, setOpenModal] = useState(true)
+
     const form = useForm({
         mode: "onBlur"
     })
 
     const {register, handleSubmit, formState, reset} = form
     const {errors, isDirty, isValid, isSubmitting, isSubmitSuccessful} = formState
+
+    const redirectToSignin = () => {
+        setOpenModal(prev => !prev)
+        navigate("/login")
+    }
 
     const resetPassword = async (data) => {
         try {
@@ -25,8 +33,7 @@ const ResetPassword = () => {
                 confirmPassword: data.confirmPassword
             })
             if (response.status === 200) {
-                //redirect user to sign-in
-                navigate("/sign-in")
+                setOpenModal(prev => !prev)
             }
         } catch(error) {
             setError(error.response.data.error)
@@ -78,6 +85,12 @@ const ResetPassword = () => {
                     <button className={`bg-button-400 py-2 text-primary-500 hover:bg-opacity-[0.7] rounded-[0.3rem] md:text-[1.1rem] mb-2 ${isSubmitting || !isDirty || !isValid ? "bg-opacity-[0.7]  hover:bg-opacity-[0.7]" : ""}`}>{isSubmitting ? <ImSpinner className={`${isSubmitting ? "animate-spin bg-opacity-[0.7]" : "animate-none"} w-6 h-6`}/> : "Reset"}</button>
                 </form>
             </section>
+            <Rodal height={240} width={350} visible={openModal} animation="zoom">
+                <section className="mt-[4rem] flex flex-col items-center gap-4">
+                    <p className="text-center text-[1rem] text-[#334155]">Password reset was successful. You can proceed to login page</p>
+                    <button className="bg-secondary-500 text-primary-500 hover:bg-opacity-[0.95] px-[2.5rem] py-2 rounded-[.4rem]" onClick={redirectToSignin}>Go to Login</button>
+                </section>
+            </Rodal>
         </main>
     )
 }

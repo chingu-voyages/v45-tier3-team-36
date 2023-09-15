@@ -121,7 +121,7 @@ const SignUp = () => {
                 </form>
                 <p className=" md:text-[1.1rem] font-normal leading-normal text-center">Already have an account? <NavLink to="/login" className="hover:underline text-secondary-500 md:text-[1rem]">login</NavLink></p>
             </section>
-            <Rodal height={300} visible={openModal} animation="zoom">
+            <Rodal height={300} width={370} visible={openModal} animation="zoom">
                 <section className="py-6 flex flex-col items-center gap-4">
                     <p className="text-[#22c55e] font-bold text-[1.3rem] text-center">Thanks! your account has been successfully created.</p>
                     <p className="text-center text-[1rem] text-[#334155]">Please check your inbox (check your spam if you don't see the email), a verification email has been sent to you. kindly verify your email to to able to login and complete your profile.</p>
