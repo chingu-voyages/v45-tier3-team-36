@@ -1,10 +1,13 @@
-# TalentBridge
-Bridging the gap between developers and employers, revolutionizing the way talent connects with opportunities.
+<p align="center">
+  <strong style="font-size: 36px">TalentBridge</strong><br><br>
+  Bridging the gap between developers and employers, revolutionizing the way talent connects with opportunities.
+</p>
 
-[Live Site](https://talentbridge-app.netlify.app) .
-[Report Bugs](https://github.com/chingu-voyages/v45-tier3-team-36/issues) .
-[Figma Design](https://www.figma.com/file/dLmyDp9o6T3WQovXGOuGro/Job-Search-Ui-Kit?type=design&mode=design&t=8OoCe4SNHiXxXiEP-1)
-
+<p align="center">
+  <a href="https://yourlivesite.com">Live Site</a> |
+  <a href="https://github.com/yourusername/yourrepository/issues">Report Bugs</a> |
+  <a href="https://www.figma.com/yourfigmalink">Figma Design</a>
+</p>
 
 ## About Project
 A job search app that bridges the gap between developers and employers, revolutionizing the way talent connects with opportunities. It empowers software engineers to search, apply, receive real-time notifications, and access personalized job recommendations
