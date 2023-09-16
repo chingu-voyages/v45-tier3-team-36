@@ -1,8 +1,10 @@
-# APP NAME GOES HERE
+# TslentBridge
 Bridging the gap between developers and employers, revolutionizing the way talent connects with opportunities.
 
 ## About Project
 A job search app that bridges the gap between developers and employers, revolutionizing the way talent connects with opportunities. It empowers software engineers to search, apply, receive real-time notifications, and access personalized job recommendations
+https://talentbridge-app.netlify.app
+
 
 ## Features
 - Sign up/Login
