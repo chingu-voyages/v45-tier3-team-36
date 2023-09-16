@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const createError = require("../middleware/createError");
 
 const jobListingSchema = new mongoose.Schema(
   {
@@ -6,36 +7,64 @@ const jobListingSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    company: {
+    description: {
+      type: String,
+      required: true,
+    },
+    skills: {
+      type: String,
+      required: true,
+    },
+    companyName: {
+      type: String,
+    },
+    companyWebsite: {
+      type: String,
+    },
+    experienceLevel: {
+      type: String,
+    },
+    language: {
+      type: String,
+    },
+    availability: {
+      type: String,
+      required: true,
+    },
+    jobType: {
       type: String,
       required: true,
     },
     location: {
       type: String,
     },
-    description: {
+    salary: {
       type: String,
+      required: true,
     },
-    salary: { type: String },
-
     requirements: [{ type: String }],
     postedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User", // Reference to the user who posted the job
       required: true,
     },
+
     applicants: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User", // Reference to users who applied for the job
       },
     ],
+    hasUserApplied: {
+      type: Boolean,
+      default: false,
+    },
     keywords: [{ type: String }],
-    jobType: {
+    jobRole: {
       // this is to differentiate between an admin posting a job and an employer.
       type: String,
       enum: ["admin", "employer"],
-      required: true
+      required: true,
     },
   },
   { timestamps: true }
@@ -48,33 +77,34 @@ jobListingSchema.statics.createJobListing = async function (data) {
     await jobListing.save();
     return jobListing;
   } catch (error) {
-    throw error;
+    return next(createError(500, "Error creating a job listing!"));
   }
 };
 
 // Static method to update a job listing by ID
-jobListingSchema.statics.updateJobListing = async function (jobListingId, data) {
+jobListingSchema.statics.updateJobListing = async function (
+  jobListingId,
+  data
+) {
   try {
-    console.log(jobListingId)
-    console.log(data)
     const updatedJobListing = await this.findByIdAndUpdate(
       jobListingId,
       {
         $set: {
-          ...data
-        }
+          ...data,
+        },
       },
       {
         new: true, // To return the updated document
       }
     );
-    
+
     if (!updatedJobListing) {
-      throw new Error('Job listing not found');
+      return next(createError(404, "Job listing not found"));
     }
     return updatedJobListing;
   } catch (error) {
-    throw error;
+    return next(createError(500, "Error updating a job listing"));
   }
 };
 
@@ -83,103 +113,34 @@ jobListingSchema.statics.deleteJobListing = async function (jobListingId) {
   try {
     const deletedJobListing = await this.findByIdAndRemove(jobListingId);
     if (!deletedJobListing) {
-      throw new Error('Job listing not found');
+      return next(createError(404, "Job listing not found"));
     }
     return deletedJobListing;
   } catch (error) {
-    throw error;
+    return next(createError(500, "Error deleting a job listing!"));
   }
 };
 
 // Static method to get all job listings
 jobListingSchema.statics.getAllJobListings = async function () {
   try {
-    return await this.find().populate('postedBy');
+    return await this.find().populate("postedBy");
   } catch (error) {
-    throw error;
+    return next(createError(500, "Error getting all job listings!"));
   }
 };
 
 // Static method to get a job listing by ID
 jobListingSchema.statics.getJobListingById = async function (jobListingId) {
   try {
-    return await this.findById(jobListingId).populate('postedBy');
+    return await this.findById(jobListingId).populate("postedBy");
   } catch (error) {
-    throw error;
+    return next(createError(500, "Error getting a job listing!"));
   }
 };
 
-// jobListingSchema.statics.paginateJobListings = async function (
-//   page,
-//   perPage,
-//   query
-// ) {
-//   try {
-//     const totalJobs = await this.countDocuments(query);
-//     const totalPages = Math.ceil(totalJobs / perPage);
-
-//    ** const options = {
-//     page: parseInt(page, 10) || 1,
-//     limit: parseInt(perPage, 10) || 10,
-//   };**...look at this later
-
-//   const sort = { createdAt: -1 }; // Sort by createdAt in descending order
-
-  
-
-
-
-//     // Apply pagination
-//     const jobListings = await this.find(query)
-//       .sort(sort)
-//       .skip((page - 1) * perPage)
-//       .limit(perPage)
-//       .populate("postedBy"); // Populate the 'postedBy' field with user details
-
-//     return {
-//       jobListings,
-//       totalPages,
-//     };
-//   } catch (error) {
-//     throw error;
-//   }
-// };
-
-jobListingSchema.statics.filterJobListings = async function (
-  filterCriteria
-//   page,
-//   limit
-) {
-  try {
-    const query = {};
-
-     if (filters.title) {
-       query.title = { $regex: filterCriteria.title, $options: "i" }; // Case-insensitive title search
-     }
-
-     if (filters.location) {
-       query.location = { $regex: filterCriteria.location, $options: "i" }; // Case-insensitive location search
-     }
-
-    // const skip = (page - 1) * limit;
-
-    const jobListings = await this.find(query)
-      .sort({ createdAt: -1 }) // Sort by creation date, descending
-    //   .skip(skip)
-    //   .limit(limit);
-
-    return jobListings;
-  } catch (error) {
-    throw error;
-  }
-};
-
-//
-jobListingSchema.statics.searchJobListings = async function (
-  searchQuery,
-//   page,
-//   limit
-) {
+// Static method for Searching for a job listing
+jobListingSchema.statics.searchJobListings = async function (searchQuery) {
   try {
     const query = {};
 
@@ -187,56 +148,65 @@ jobListingSchema.statics.searchJobListings = async function (
       query.$or = [
         { title: { $regex: searchQuery, $options: "i" } }, // Case-insensitive title search
         { description: { $regex: searchQuery, $options: "i" } }, // Case-insensitive description search
-        { location: { $regex: searchQuery, $options: "i" } } // Case-insensitive location search
+        { location: { $regex: searchQuery, $options: "i" } }, // Case-insensitive location search
       ];
     }
 
-    // const skip = (page - 1) * limit;
-
-    const jobListings = await this.find(query)
-      .sort({ createdAt: -1 }) // Sort by creation date, descending
-    //   .skip(skip)
-    //   .limit(limit);
+    const jobListings = await this.find(query).sort({ createdAt: -1 }); // Sort by creation date, descending
 
     return jobListings;
   } catch (error) {
-    throw error;
+    return next(createError(500, "Error searching for job listing!"));
   }
 };
 
 // Statics method to apply for jobs
 jobListingSchema.statics.applyToJob = async function (jobId, userId) {
   try {
-    
-     const job = await this.findById(jobId); 
-    
+    const job = await this.findById(jobId);
+
     // Check if the job is posted by an employer (jobType references an "employer" user)
-    if (job.jobType === "employer") {
-      
-      job.applicants.push(userId);
-      await job.save();
-      return "Application submitted successfully.";
-    } else {
-      return "Please use the application link posted to apply for this job.";
+    if (job.jobRole !== "employer") {
+      return next(
+        createError(
+          400,
+          "Please use the application link posted to apply for this job."
+        )
+      );
     }
+
+    // Check if the user has already applied for this job
+    if (job.hasUserApplied) {
+      return next(
+        createError(400, "You have already applied to this job listing.")
+      );
+    }
+    // If the user hasn't applied, set the hasUserApplied field to true
+    job.hasUserApplied = true;
+
+    // Add the user's ID to the applicants array
+    job.applicants.push(userId);
+    await job.save();
+    return "Application submitted successfully.";
   } catch (error) {
-    throw error;
+    return next(createError(500, "Error submitting application!"));
   }
 };
 
-JobListingSchema.statics.findApplicantsForJob = async function (jobId) {
+// Statics method to find Applicants that applied for a job listing
+jobListingSchema.statics.findApplicantsForJob = async function (jobId) {
   try {
     const job = await this.findById(jobId);
     if (!job) {
-      throw new Error("Job listing not found");
+      return next(createError(400, "Job listing not found!"));
     }
     return job.applicants;
   } catch (error) {
-    throw error;
+    return next(
+      createError(500, "Error getting applicants that applied for this job!")
+    );
   }
 };
-
-
 
 const JobListing = mongoose.model("JobListing", jobListingSchema);
 

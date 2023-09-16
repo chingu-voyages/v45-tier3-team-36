@@ -3,20 +3,35 @@ const JobListing = require("../models/jobListingModel");
 // Controller for creating job listing
 const createJobListing = async (req, res) => {
   try {
-    const { title, description, location, salary, company } = req.body;
-    console.log({reqUser: req.user})
+    const {   
+      title,
+      description,
+      skills,
+      availability,
+      experienceLevel,
+      language,
+      jobType,
+      salary,
+      companyName,
+      companyWebsite,
+      location } = req.body;
     const userId = req.user.id; 
-    const jobType = req.user.role;
-    console.log({userId: userId})
+    const jobRole = req.user.role;
 
     const jobListingData = {
       title,
       description,
-      location,
+      skills,
+      availability,
+      experienceLevel,
+      language,
+      jobType,
       salary,
+      companyName,
+      companyWebsite,
+      location,
       postedBy: userId, // Assign the user who is posting the job listing
-      company,
-      jobType: jobType
+      jobRole: jobRole
     };
 
     const newJobListing = await JobListing.createJobListing(jobListingData);
@@ -29,20 +44,39 @@ const createJobListing = async (req, res) => {
 // Controller for updating job listing
 const updateJobListing = async (req, res) => {
   try {
-    const { title, description, location, salary } = req.body;
+    const {
+      title,
+      description,
+      skills,
+      availability,
+      experienceLevel,
+      language,
+      jobType,
+      salary,
+      companyName,
+      companyWebsite,
+      location
+    } = req.body;
     const { id } = req.params;
    
 
     const data = {
       title,
       description,
+      skills,
+      availability,
+      experienceLevel,
+      language,
+      jobType,
+      salary,
+      companyName,
+      companyWebsite,
       location,
-      salary
     };
 
     const updatedJobListing = await JobListing.updateJobListing(id, data);
 
-    res.json({message: "Job listing updated successfully"});
+    res.status(200).json({message: "Job listing updated successfully"});
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -79,7 +113,7 @@ const getJobListingById = async (req, res) => {
 
     const jobListing = await JobListing.getJobListingById(id);
 
-    res.json(jobListing);
+    res.status(200).json(jobListing);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -90,7 +124,7 @@ const searchJobListing = async (req, res) => {
   const { search } = req.query;
   try {
     const jobListings = await JobListing.searchJobListings(search);
-    res.json(jobListings);
+    res.status(200).json(jobListings);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -107,17 +141,6 @@ const filterJobListing = async (req, res) => {
     }
 }
 
-// Controller for paginating job listings
-// const paginateJobListing = async (req, res) => {
-//     const { page, perPage } = req.query;
-//     try {
-//       const jobListings = await JobListing.paginateJobListings(page, perPage);
-//       res.status(200).json(jobListings);
-//     } catch (error) {
-//       res.status(500).json({ error: error.message });
-//     }
-// }
-
 
 const applyToJob = async (req, res) => {
   try {
@@ -126,7 +149,7 @@ const applyToJob = async (req, res) => {
 
     const message = await JobListing.applyToJob(id, userId);
 
-    res.status(200).json({ message });
+    res.status(201).json({ message: "Job Applied Successfully" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
