@@ -1,7 +1,9 @@
-<p align="center">
-  <strong style="font-size: 36px">TalentBridge</strong><br><br>
-  Bridging the gap between developers and employers, revolutionizing the way talent connects with opportunities.
-</p>
+<h1 align="center">
+  <strong>TalentBridge</strong>
+  </h1>
+  <p align="center">
+    Bridging the gap between developers and employers, revolutionizing the way talent connects with opportunities.
+  </p>
 
 <p align="center">
   <a href="https://yourlivesite.com">Live Site</a> |
