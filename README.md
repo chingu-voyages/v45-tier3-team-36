@@ -1,4 +1,4 @@
-# TslentBridge
+# TalentBridge
 Bridging the gap between developers and employers, revolutionizing the way talent connects with opportunities.
 
 ## About Project
