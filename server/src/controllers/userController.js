@@ -5,7 +5,9 @@ const signupUser = async (req, res) => {
   try {
     const { firstname, lastname, email, password } = req.body;
     const user = await User.signup(firstname, lastname, email, password);
-    res.json({ message: "User created. Please verify your email." });
+    res
+      .status(201)
+      .json({ message: "User created. Please verify your email." });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -14,21 +16,33 @@ const signupUser = async (req, res) => {
 // Controller for Employers sign up
 const employerSignUp = async (req, res) => {
   try {
-    console.log({Employer: req.body})
+    console.log({ Employer: req.body });
     const { firstname, lastname, email, password, company } = req.body;
-    const employer = await User.registerEmployer (firstname, lastname, email, password, company);
-    res.json({ message: "Employer signup successful. Please verify your email." })
+    const employer = await User.registerEmployer(
+      firstname,
+      lastname,
+      email,
+      password,
+      company
+    );
+    res
+      .status(201)
+      .json({
+        message: "Employer signup successful. Please verify your email.",
+      });
   } catch (error) {
-    res.status(400).json({ error: error.message })
+    res.status(400).json({ error: error.message });
   }
-}
+};
 
 // Controller for email verification
 const verifyEmail = async (req, res) => {
   try {
     const { token } = req.query;
     const user = await User.verifyEmail(token);
-    res.json({ message: "Email verified successfully. Please sign in" });
+    res
+      .status(200)
+      .json({ message: "Email verified successfully. Please sign in" });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -55,7 +69,7 @@ const initiatePasswordReset = async (req, res) => {
   try {
     const { email } = req.body;
     await User.initiatePasswordReset(email);
-    res.json({
+    res.status(200).json({
       message: "Password reset initiated. Check your email for instructions.",
     });
   } catch (error) {
@@ -63,27 +77,42 @@ const initiatePasswordReset = async (req, res) => {
   }
 };
 
+// Controller for resending verification email
+const resendVerificationEmail = async(req, res) => {
+   try {
+     const { email } = req.body; // Get the user's email from the request
+
+     // Call the static method to resend the verification email
+     const message = await User.resendVerificationEmail(email);
+
+     // Handle the success message and send a response
+     return res.status(200).json({ message });
+   } catch (error) {
+     // Handle errors and send an appropriate response
+     return res.status(500).json({ error: "An error occurred" });
+   }
+}
+
+
 // Controller for resetting password using reset token
 const resetPasswordWithToken = async (req, res) => {
   try {
     const { newPassword, confirmPassword } = req.body;
-    const { token } = req.query; 
+    const { token } = req.query;
 
     if (newPassword !== confirmPassword) {
       return res.status(400).json({ error: "Passwords do not match" });
     }
 
     await User.resetTokenWithPassword(token, newPassword);
-    res.json({ message: "Password reset successful." });
+    res.status(200).json({ message: "Password reset successful." });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 
-
 const updateUserProfile = async (req, res) => {
   try {
-    console.log({ ReqBody: req.body });
     const {
       firstname,
       lastname,
@@ -94,10 +123,10 @@ const updateUserProfile = async (req, res) => {
       location,
       skills,
       personalWebsite,
-      socialMedia,
+      github,
+      linkedin,
       receiveJobNotifications,
-      jobPreferences
-
+      jobPreferences,
     } = req.body;
 
     console.log({ RequestFiles: req.files });
@@ -106,9 +135,8 @@ const updateUserProfile = async (req, res) => {
     const profilePicturePath = profilePicture[0].filename;
     const resumePath = resume[0].filename;
 
-    // const token = req.header("Authorization").replace("Bearer ", "");
-    const authHeader = req.headers.authorization || req.headers.Authorization 
-    const token = authHeader.split(" ")[1]
+    const authHeader = req.headers.authorization || req.headers.Authorization;
+    const token = authHeader.split(" ")[1];
 
     const updates = {
       firstname,
@@ -120,9 +148,10 @@ const updateUserProfile = async (req, res) => {
       location,
       skills,
       personalWebsite,
-      socialMedia,
+      github,
+      linkedin,
       receiveJobNotifications,
-      jobPreferences,
+      jobPreferences
     };
     const updatedUser = await User.updateUserProfile(
       token,
@@ -137,13 +166,13 @@ const updateUserProfile = async (req, res) => {
       .json({ message: "Profile updated successfully", user: updatedUser });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Error updating profile" });
+    res.status(500).json({ error: error.message });
   }
 };
 
 const promoteToAdmin = async (req, res) => {
   try {
-    const { email } = req.body; 
+    const { email } = req.body;
 
     const user = await User.promoteToAdmin(email);
 
@@ -161,9 +190,9 @@ const sendJobNotification = async (req, res) => {
 
     res.status(200).json({ message: "Job notifications sent successfully." });
   } catch (error) {
-    res.status(500).json({ error: "Error sending job notifications" });
+    res.status(500).json({ error: error.message });
   }
-}
+};
 
 const getAllUsers = async (req, res) => {
   try {
@@ -179,28 +208,29 @@ const getUserProfile = async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.getUserProfile(id);
-    res.status(200).json({ user })
+    res.status(200).json({ user });
   } catch (error) {
-    res.status(500).json({ error: 'Error fetching user profile' });
+    res.status(500).json({ error: error.message });
   }
-}
+};
 
 const deleteUser = async (req, res) => {
   try {
     const { userId } = req.params;
-     const { email } = req.body;
+    const { email } = req.body;
 
-    const deletedUser = await User.deleteUser(userId);
+    const deletedUser = await User.deleteUser(userId, email);
+    res.status(200).json({ message: "User deleted successfully!!" });
   } catch (error) {
     res.status(500).json({ error: "Error deleting user" });
   }
-}
-
+};
 
 module.exports = {
   signupUser,
   verifyEmail,
   loginUser,
+  resendVerificationEmail,
   initiatePasswordReset,
   resetPasswordWithToken,
   updateUserProfile,
@@ -209,5 +239,5 @@ module.exports = {
   employerSignUp,
   getAllUsers,
   getUserProfile,
-  deleteUser
+  deleteUser,
 };
