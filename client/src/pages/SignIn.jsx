@@ -1,20 +1,20 @@
-import { NavLink, } from "react-router-dom"
+import { NavLink, useNavigate, useLocation} from "react-router-dom"
 import {useForm} from "react-hook-form"
 import {ImSpinner} from "react-icons/im"
 import axios from "axios"
 import { useState, useEffect } from "react"
 import {BsFillEyeFill, BsFillEyeSlashFill} from "react-icons/bs"
-// import useAuth from "../hooks/useAuth"
+import useAuth from "../hooks/useAuth"
 
 const SignIn = () => {
-    // const {setAuth} = useAuth()
+    const {setAuth} = useAuth()
 
     const [error, setError] = useState("")
     const [visible, setVisible] = useState(false)
 
-    // const location = useLocation()
-    // const navigate = useNavigate()
-    // const from = location.state?.from?.pathname || "/"
+    const location = useLocation()
+    const navigate = useNavigate()
+    const from = location.state?.from?.pathname || "/"
 
     const form = useForm({
         mode: "onBlur"
@@ -31,7 +31,18 @@ const SignIn = () => {
         })
         if(response) {
             //give user access and redirect user profile
-            console.log(response)
+            console.log(response.data.user)
+
+            const roles = response.data.user.user.role
+            const accessToken = response.data.user.authToken
+
+            setAuth({
+                user: data.email,
+                roles: [roles],
+                accessToken: accessToken
+            })
+
+            navigate(from, {replace: true})
         }
         }catch(error) {
             setError(error.response.data.error)
