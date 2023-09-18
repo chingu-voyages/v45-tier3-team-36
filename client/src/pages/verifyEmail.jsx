@@ -43,7 +43,7 @@ const VerifyEmail = () => {
                                 <button className="bg-secondary-500 text-primary-500 px-[.7rem] py-[.5rem] rounded-[.2rem] flex justify-center w-[9rem] items-center hover:bg-opacity-[0.95]">{isSubmitting ? <ImSpinner className={`${isSubmitting ? "animate-spin bg-opacity-[0.7]" : "animate-none"} w-6 h-6`}/> : "Verify"}</button>
 
                                 {
-                                    error !== "" &&  <p className="text-red-700 text-[.95rem]">{error}</p>
+                                    error !== "" && <p className="text-red-700 text-[.95rem]">{error}</p>
                                 }
                             </form>
 
