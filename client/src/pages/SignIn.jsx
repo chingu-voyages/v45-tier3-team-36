@@ -62,7 +62,7 @@ const SignIn = () => {
                 <form className="flex flex-col gap-4" onSubmit={handleSubmit(signInUser)} noValidate>
                     <label htmlFor="email" className="flex flex-col gap-2 text-[1rem] md:text-[1.26rem] font-normal leading-normal">
                         Email
-                        <input className="border-2 border-secondary-500 py-2 px-2 text-[1rem] rounded-[0.25rem] outline-none" id="email" type="email"  {...register("email", {
+                        <input className="border-[1.5px] border-secondary-500 py-2 px-2 text-[1rem] rounded-[0.25rem] outline-none" id="email" type="email"  {...register("email", {
                             required: {
                                 value: true,
                                 message: "email is required"
@@ -76,7 +76,7 @@ const SignIn = () => {
                     </label>
                     <label htmlFor="password" className="flex flex-col gap-2 text-[1rem] md:text-[1.26rem] font-normal leading-normal">
                         Password
-                        <div className="flex justify-between items-center border-2 px-2 text-[1rem] border-secondary-500 rounded-[0.25rem]">
+                        <div className="flex justify-between items-center border-[1.5px] px-2 text-[1rem] border-secondary-500 rounded-[0.25rem]">
                             <input  className="text-[1rem] w-full py-2 outline-none" type={visible ? "text" : "password"} id="password" {...register("password", {
                                 required: {
                                     value: true,

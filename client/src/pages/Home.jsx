@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom"
+
 import carbonIcon from "../assets/icons/carbon_application-web.png"
 import marketingIcon from "../assets/icons/nimbus_marketing.png"
 import codeIcon from "../assets/icons/bi_code-slash.png"
@@ -16,8 +18,8 @@ const Home = () => {
                 <section className="text-primary-500 px-2 md:px-0">
                     <h2 className="text-[1.7rem] md:text-[3rem] font-normal leading-normal">200+ Jobs Listed</h2>
                     <h2 className="text-[2.2rem] md:text-[3.5rem] font-normal leading-normal">Find Your Dream Job</h2>
-                    <p className="mt-[1rem] text-[1rem] md:text-[1.4rem] font-normal leading-normal w-[90%] md:w-[40%]">Navigate Your Career Journey Seamlessly with TalentBridge - Your Job Search Companion</p>
-                    <button className="mt-6 text-[1rem] font-normal leading-normal cursor-pointer hover:opacity-[0.6] px-6 py-2 rounded-[.2rem] bg-primary-600">Find Jobs</button>
+                    <p className="mt-[1rem] mb-6 text-[1rem] md:text-[1.4rem] font-normal leading-normal w-[90%] md:w-[40%]">Navigate Your Career Journey Seamlessly with TalentBridge - Your Job Search Companion</p>
+                    <NavLink to="/search-jobs" className="mt-6 text-[1rem] font-normal leading-normal cursor-pointer hover:opacity-[0.6] px-6 py-2 rounded-[.2rem] bg-primary-600">Find Jobs</NavLink>
                 </section>
 
                 <div className="first-curve">
@@ -149,12 +151,12 @@ const Home = () => {
                     <article>
                         <h2 className="text-[2.2rem] md:text-[2.5rem] font-medium leading-normal">Looking for a Job?</h2>
                         <p className="text-[1rem] md:text-[1.4rem] font-normal md:leading-[1.75rem] w-[70%] my-[1rem]">We provide online instant cash loans with quick approval</p>
-                        <button className="text-[1rem] font-normal cursor-pointer hover:opacity-[0.6] px-4 py-2 rounded-[.2rem] bg-primary-600 text-primary-500">Find Jobs</button>
+                        <NavLink to="/search-jobs" className="text-[1rem] font-normal cursor-pointer hover:opacity-[0.6] px-4 py-2 rounded-[.2rem] bg-primary-600 text-primary-500">Find Jobs</NavLink>
                     </article>
                     <article>
                         <h2 className="text-[2.2rem] md:text-[2.5rem] font-medium leading-normal">Looking for an Expert?</h2>
                         <p className="text-[1rem] md:text-[1.4rem] font-normal md:leading-[1.75rem] w-[70%] my-[1rem]">We provide online instant cash loans with quick approval</p>
-                        <button className="text-[1rem] font-normal cursor-pointer hover:opacity-[0.6] px-4 py-2 rounded-[.2rem] bg-primary-600 text-primary-500">Post a Job</button>
+                        <NavLink to="search-jobs" className="text-[1rem] font-normal cursor-pointer hover:opacity-[0.6] px-4 py-2 rounded-[.2rem] bg-primary-600 text-primary-500">Post a Job</NavLink>
                     </article>
                 </div>
 

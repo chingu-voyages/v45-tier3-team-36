@@ -9,6 +9,7 @@ import ForgotPassword from "./pages/ForgotPassword"
 import UserDashBoard from "./pages/UserDashBoard"
 import PostAJob from "./pages/PostAJob"
 import VerifyEmail from "./pages/verifyEmail"
+import FindJobs from "./pages/FindJobs"
 import Unauthorized from "./pages/Unauthorized"
 import ProtectedRoutes from "./components/ProtectedRoutes"
 
@@ -19,6 +20,7 @@ const App = () => {
     createRoutesFromElements(
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
+        <Route path="/search-jobs" element={<FindJobs />} />
         <Route path="/login" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-up/verify-email" element={<VerifyEmail />} />
