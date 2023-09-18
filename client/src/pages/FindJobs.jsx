@@ -22,7 +22,7 @@ const FindJobs = () => {
             </section>
 
             <section className="bg-primary-700 px-2 md:px-0 pt-[1rem] pb-[12rem] md:pt-[2rem] md:pb-[12rem]">
-                <div className="md:w-[70%] md:mx-auto bg-primary-500 px-4 py-4">
+                <div className="w-[70%] mx-auto py-2 px-4">
                     <p className="text-[1.1rem] md:text-[1.3rem] font-medium leading-normal">Search Jobs</p>
                     {
                         isDesktop && <DesktopFilter />

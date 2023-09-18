@@ -5,7 +5,7 @@ import { AiOutlineClose } from 'react-icons/ai'
 import useAuth from "../hooks/useAuth"
 
 
-const RoutesWithoutHeader = ["/login", "/unauthorized", "/sign-up", "/reset-password", "/post-job", "/forgot-password", "/sign-up/verify-email", "/forgot-password/initialize_password_reset"]
+const RoutesWithoutHeader = ["/login", "/unauthorized", "/sign-up", "/reset-password", "/forgot-password", "/sign-up/verify-email", "/forgot-password/initialize_password_reset"]
 
 const Header = () => {
     const [toggle, setToggle] = useState(false)
