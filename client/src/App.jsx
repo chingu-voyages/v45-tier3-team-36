@@ -10,6 +10,7 @@ import UserDashBoard from "./pages/UserDashBoard"
 import PostAJob from "./pages/PostAJob"
 import VerifyEmail from "./pages/verifyEmail"
 import FindJobs from "./pages/FindJobs"
+import AboutUs from "./pages/AboutUs"
 import Unauthorized from "./pages/Unauthorized"
 import ProtectedRoutes from "./components/ProtectedRoutes"
 
@@ -20,6 +21,7 @@ const App = () => {
     createRoutesFromElements(
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
+        <Route path="/about-us" element={<AboutUs />} />
         <Route path="/search-jobs" element={<FindJobs />} />
         <Route path="/login" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />

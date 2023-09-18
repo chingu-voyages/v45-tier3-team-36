@@ -91,7 +91,7 @@ const Home = () => {
                             visible: {opacity: 1, x: 0}
                         }} initial="hidden" animate="visible" transition={{duration: 0.5, delay: 0.25}} className="md:w-[48%]">
                         <h2 className="text-[2.2rem] mb-[1.1rem] md:text-[2.5rem] font-medium leading-normal">Popular Category</h2>
-                        <p className="text-[1rem] md:text-[1.4rem] font-normal md:leading-[1.75rem]">Embark on a journey of exploration as you delve into the most in-demand fields, discovering a world of career opportunities that await you on TalentBridge-where your dream job is just a click away.
+                        <p className="text-[1rem] md:text-[1.4rem] font-normal md:leading-[1.75rem]">Embark on a journey of exploration as you delve into the most in-demand fields, discovering a world of career opportunities that await you on TalentBridge - where your dream job is just a click away.
                         </p>
                     </motion.article>
                 </div>
@@ -110,7 +110,7 @@ const Home = () => {
                             visible: {opacity: 1, x: 0}
                         }} initial="hidden" animate="visible" transition={{duration: 0.5, delay: 0.25}} className="md:w-[48%]">
                         <h2 className="text-[2.2rem] mb-[1.1rem] md:text-[2.5rem] font-medium leading-normal">Top Companies</h2>
-                        <p className="text-[1rem] md:text-[1.4rem] font-normal md:leading-[1.75rem]">Connect with Industry Leaders and leading Innovators. Explore Career Opportunities with the Most Esteemed Companies on TalentBridge-Your Gateway to Success.
+                        <p className="text-[1rem] md:text-[1.4rem] font-normal md:leading-[1.75rem]">Connect with Industry Leaders and leading Innovators. Explore Career Opportunities with the Most Esteemed Companies on TalentBridge - Your Gateway to Success.
                         </p>
                     </motion.article>
 

@@ -42,7 +42,7 @@ const Header = () => {
                         <ul className="flex flex-col gap-2 md:gap-4 md:flex-row md:mx-auto items-center">
                             <li onClick={closeToggle}><NavLink to="/" className="nav-links">Home</NavLink></li>
                             <li onClick={closeToggle}><NavLink to="/search-jobs" className="nav-links">Jobs</NavLink></li>
-                            <li onClick={closeToggle}><NavLink className="nav-links">About Us</NavLink></li>
+                            <li onClick={closeToggle}><NavLink to="/about-us" className="nav-links">About Us</NavLink></li>
                         </ul>
                         <ul className="flex flex-col gap-4 md:gap-4 md:flex-row items-center">
 

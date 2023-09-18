@@ -14,7 +14,7 @@ const PostAJob = () => {
             <article className="relative pt-[6rem] pb-[7rem] md:w-[90%] md:mx-auto">
                 <section className="text-primary-500 px-2 md:px-0">
                     <h1 className="text-[1.7rem] md:text-[3rem] font-normal leading-normal">Post a Job</h1>
-                    <p className="w-[80%] md:w-[40%]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi deserunt facere minima, ducimus velit neque</p>
+                    <p className="w-[80%] md:w-[40%]">Ready to Build Your Dream Team? Post Your Job Openings on TalentBridge and Attract the Best Talent in the Industry - It's Where Opportunity Meets Excellence.</p>
                 </section>
 
                 <div className="first-curve">
